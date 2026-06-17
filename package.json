@@ -3,7 +3,7 @@
   "version": "5.0.0",
   "description": "Prepends licensing information to CSS files",
   "license": "Apache-2.0",
-  "author": "Cassondra Roberts <castastrophe@users.noreply.github.com> (https://allons-y.llc)",
+  "author": "Cassondra Roberts <castastrophe@users.noreply.github.com> (https://allons-y.studio)",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/castastrophe/postcss-licensing.git"
