@@ -1,3 +1,6 @@
+<!-- weaver:banner:START -->
+<!-- weaver:banner:END -->
+
 # postcss-licensing
 
 > Prepends licensing or other metadata to CSS files
