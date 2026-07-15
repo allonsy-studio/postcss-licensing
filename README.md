@@ -7,6 +7,7 @@
 
 <!-- weaver:banner:END -->
 
+<!-- weaver:header:START -->
 <h1 align="center">postcss-licensing</h1>
 <p align="center">
   <b>Prepends licensing or other metadata to CSS files.</b>
@@ -19,6 +20,7 @@
 [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg)](https://conventionalcommits.org/)
 
 </div>
+<!-- weaver:header:END -->
 
 ## Installation
 
