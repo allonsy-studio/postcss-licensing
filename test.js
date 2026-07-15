@@ -1,42 +1,32 @@
-const fs = require("fs");
-const test = require("ava");
-const postcss = require("postcss");
+import { readFileSync } from "node:fs";
 
-const plugin = require("./index.js");
-const { messages } = require("./index.js");
+import test from "ava";
+import postcss from "postcss";
 
-function compare(
-  t,
-  fixtureFilePath,
-  expectedFilePath,
-  options = {}
-) {
-  return postcss([plugin(options)])
-    .process(fs.readFileSync(`./fixtures/${fixtureFilePath}`, "utf8"), {
+import plugin from "./index.js";
+import { messages } from "./index.js";
+
+async function compare(t, fixtureFilePath, expectedFilePath, options = {}) {
+  const result = await postcss([plugin(options)]).process(
+    readFileSync(`./fixtures/${fixtureFilePath}`, "utf8"),
+    {
       from: fixtureFilePath,
-    })
-    .then((result) => {
-      const actual = result.css;
-      const expected = fs.readFileSync(
-        `./expected/${expectedFilePath}`,
-        "utf8"
-      );
-      t.is(actual, expected);
-      t.is(result.warnings().length, 0);
-    });
+    },
+  );
+  const actual = result.css;
+  const expected = readFileSync(`./expected/${expectedFilePath}`, "utf8");
+  t.is(actual, expected);
+  t.is(result.warnings().length, 0);
 }
 
-function fetchWarnings(
-  fixtureFilePath,
-  options = {}
-) {
-  return postcss([plugin(options)])
-    .process(fs.readFileSync(`./fixtures/${fixtureFilePath}`, "utf8"), {
+async function fetchWarnings(fixtureFilePath, options = {}) {
+  const result = await postcss([plugin(options)]).process(
+    readFileSync(`./fixtures/${fixtureFilePath}`, "utf8"),
+    {
       from: fixtureFilePath,
-    })
-    .then((result) => {
-      return result.warnings();
-    });
+    },
+  );
+  return result.warnings();
 }
 
 test("create basic output", (t) => {
@@ -48,15 +38,21 @@ test("add no license if the file is empty", (t) => {
 });
 
 test("load license from file", (t) => {
-  return compare(t, "basic.css", "custom_copyright.css", { filename: './fixtures/CUSTOM_COPYRIGHT' });
+  return compare(t, "basic.css", "custom_copyright.css", {
+    filename: "./fixtures/CUSTOM_COPYRIGHT",
+  });
 });
 
 test("add license to empty file is option skipIfEmpty = false", (t) => {
-  return compare(t, "empty.css", "empty_with_license.css", { skipIfEmpty: false });
+  return compare(t, "empty.css", "empty_with_license.css", {
+    skipIfEmpty: false,
+  });
 });
 
 test("warn if files don't exist", async (t) => {
-  const warnings = await fetchWarnings("basic.css", { filename: './fixtures/FAIL_COPYRIGHT' });
+  const warnings = await fetchWarnings("basic.css", {
+    filename: "./fixtures/FAIL_COPYRIGHT",
+  });
   t.is(warnings.length, 1);
-  t.is(warnings?.[0]?.text, messages.fileNotFound('./fixtures/FAIL_COPYRIGHT'));
+  t.is(warnings?.[0]?.text, messages.fileNotFound("./fixtures/FAIL_COPYRIGHT"));
 });

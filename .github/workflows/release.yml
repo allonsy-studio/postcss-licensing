@@ -2,62 +2,71 @@ name: Release
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
+
+permissions:
+  contents: write # push tags + create the GitHub release
+  pull-requests: write # changesets opens the "Version Packages" PR
+  id-token: write # OIDC token for npm trusted publishing
+
+env:
+  GH_TOKEN: ${{ github.token }}
 
 jobs:
-    publish:
-      runs-on: ubuntu-latest
-      permissions:
-        id-token: write # Required for OIDC
-        contents: write # to create release tags (cycjimmy/semantic-release-action)
-        issues: write # to post release that resolves an issue
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  release:
+    runs-on: ubuntu-latest
 
-      strategy:
-        matrix:
-          node-version: [24]
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v7
+        with:
+          # Full history + tags to detect prior releases, and persist the
+          # PAT so the publish step can push tags without re-auth.
+          fetch-depth: 0
 
-      steps:
-        - name: Check out code
-          uses: actions/checkout@v6
-          with:
-            persist-credentials: false
+      - name: Enable corepack
+        run: corepack enable
 
-        - name: Enable Corepack
-          run: corepack enable
+      - name: Setup Node
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: yarn
 
-        - name: Setup Node.js
-          uses: actions/setup-node@v6
-          with:
-            node-version: ${{ matrix.node-version }}
-            cache: yarn
-            registry-url: "https://registry.npmjs.org"
+      - name: Install dependencies
+        run: yarn install --immutable
 
-        ## --- YARN CACHE --- ##
-        - name: Check for cached dependencies
-          continue-on-error: true
-          id: cache-dependencies
-          uses: actions/cache@v5
-          with:
-            path: |
-              .cache/yarn
-              node_modules
-            key: ubuntu-latest-node${{ matrix.node-version }}-${{ hashFiles('yarn.lock') }}
+      - name: Update npm for OIDC trusted publishing
+        run: npm install --global npm@latest
 
+      - name: Version
+        id: changesets
+        uses: changesets/action@v1
+        with:
+          version: yarn changeset version
+          title: "chore(release): version packages"
+          commit: "chore(release): version packages"
 
-        - name: Install dependencies
-          shell: bash
-          run: yarn install --frozen-lockfile
+      # Runs on the push that merges the version PR. The npm and tag checks
+      # are independent so the step is a safe no-op on every other push.
+      - name: Publish
+        if: steps.changesets.outputs.hasChangesets == 'false'
+        run: |
+          PKG="$(node -p "require('./package.json').name")"
+          VERSION="$(node -p "require('./package.json').version")"
+          TAG="v${VERSION}"
 
-        - name: Semantic release
-          uses: cycjimmy/semantic-release-action@v6.0.0
-          with:
-            semantic_version: 25
-          env:
-            GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            GIT_AUTHOR_NAME: Cassondra Roberts
-            GIT_AUTHOR_EMAIL: castastrophe@users.noreply.github.com
-            GIT_COMMITTER_NAME: Cassondra Roberts
-            GIT_COMMITTER_EMAIL: castastrophe@users.noreply.github.com
+          # Publish to npm via OIDC (no token)
+          npm view "${PKG}@${VERSION}" version >/dev/null 2>&1 \
+              || npm publish --access public --provenance
+
+          # Tag the release, unless this version is already tagged.
+          if git rev-parse -q --verify "refs/tags/${TAG}" >/dev/null; then
+              echo "${TAG} already tagged."
+          else
+              git config user.name "github-actions[bot]"
+              git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+              git tag "${TAG}"
+              git push origin "${TAG}"
+              gh release create "${TAG}" --title "${TAG}" --generate-notes
+          fi
