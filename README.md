@@ -17,7 +17,6 @@
 
 [![Tests](https://github.com/allonsy-studio/postcss-licensing/actions/workflows/testing.yml/badge.svg?branch=main)](https://github.com/allonsy-studio/postcss-licensing/actions/workflows/testing.yml)
 [![NPM version](https://img.shields.io/npm/v/postcss-licensing.svg)](https://www.npmjs.com/package/postcss-licensing)
-[![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg)](https://conventionalcommits.org/)
 
 </div>
 <!-- weaver:header:END -->
