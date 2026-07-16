@@ -25,9 +25,13 @@
     <img src="https://github.com/allonsy-studio/postcss-licensing/actions/workflows/testing.yml/badge.svg?branch=main" alt="Tests" height="20" />
   </a>
   <a href="https://www.npmjs.com/package/@allons-y/postcss-licensing">
-  <img src="https://img.shields.io/npm/v/@allons-y/postcss-licensing.svg" alt="NPM version" height="20" />
+    <img src="https://img.shields.io/npm/v/@allons-y/postcss-licensing.svg" alt="NPM version" height="20" />
   </a>
 
+</p>
+
+<p align="center">
+  <img src="https://github.com/allonsy-studio/.github/blob/main/assets/tag-rule.gif" alt="" height="10" />
 </p>
 
 <!-- weaver:header:END -->
@@ -104,7 +108,7 @@ This project is licensed under the MPL-2.0 License - see the [LICENSE](LICENSE) 
 If you find this plugin useful and would like to buy me a coffee/beer as a small thank you, I would greatly appreciate it!
 
 <a href="https://www.buymeacoffee.com/castastrophe">
-    <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" height="60" width="217" />
+    <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" height="40"/>
 </a>
 
 <!-- weaver:funding:END -->
