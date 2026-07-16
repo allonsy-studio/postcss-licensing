@@ -20,15 +20,12 @@
     <a href="https://github.com/allonsy-studio/postcss-licensing/actions/workflows/testing.yml">
       <img src="https://github.com/allonsy-studio/postcss-licensing/actions/workflows/testing.yml/badge.svg?branch=main" alt="Tests" height="20" />
     </a>
-
     <a href="https://www.npmjs.com/package/@allons-y/postcss-licensing">
       <img src="https://img.shields.io/npm/v/@allons-y/postcss-licensing.svg" alt="NPM version" height="20" />
     </a>
-
     <a href="https://github.com/allonsy-studio/postcss-licensing/blob/main/LICENSE">
       <img src="https://img.shields.io/github/license/allonsy-studio/postcss-licensing.svg" alt="License" height="20" />
     </a>
-
     <a href="https://allons-y.studio">
       <img src="https://github.com/allonsy-studio/.github/blob/main/assets/svg/badge.svg" alt="Brought to you by Allons-y Studio" height="20" />
     </a>
