@@ -8,7 +8,10 @@
 </p>
 
 <h1 align="center" border="none">postcss-licensing</h1>
-<img align="center" src="https://github.com/allonsy-studio/.github/blob/main/assets/tag-rule.gif" alt="" height="30" />
+
+<p align="center">
+  <img src="https://github.com/allonsy-studio/.github/blob/main/assets/tag-rule.gif" alt="" height="30" />
+</p>
 
 <p align="center"><b>Prepends licensing or other metadata to CSS files.</b></p>
 
