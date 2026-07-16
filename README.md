@@ -40,7 +40,6 @@ You can expect to turn a file like this:
   --spectrum-actionbutton-border-color: transparent;
   --spectrum-actionbutton-background-color: purple;
 }
-
 ```
 
 into this:
@@ -54,7 +53,6 @@ into this:
   --spectrum-actionbutton-background-color: purple;
   --spectrum-actionbutton-border-color: transparent;
 }
-
 ```
 
 ## Options
@@ -74,7 +72,12 @@ postcss([
   })
 ]).process(...)
 ```
+
+<!-- weaver:changesets:START -->
+<!-- weaver:changesets:END -->
+
 <!-- weaver:contribution:START -->
+
 ## Contributing
 
 Contributions are welcome! Please open an [issue](https://github.com/allonsy-studio/glob-concat-cli/issues/new) or submit a pull request.
@@ -82,11 +85,6 @@ Contributions are welcome! Please open an [issue](https://github.com/allonsy-stu
 <!-- weaver:contribution:END -->
 
 <!-- weaver:license:START -->
-
-## License
-
-This project is licensed under the Apache 2.0 License - see the [LICENSE](LICENSE) file for details. This means you can use this however you like as long as you provide attribution back to this one. It's nice to share but it's also nice to get credit for your work. 😉
-
 <!-- weaver:license:END -->
 
 <!-- weaver:funding:START -->
