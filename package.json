@@ -42,7 +42,6 @@
     "postpack": "pinst --enable",
     "prepack": "pinst --disable",
     "prepare": "husky && envoy || true",
-    "semantic-release": "semantic-release",
     "test": "ava"
   },
   "peerDependencies": {
