@@ -59,7 +59,7 @@ Use Conventional Commits:
 ```text
 <type>(<optional-scope>): <imperative subject, ≤100 chars, lowercase, no period>
 
-<body: what changed and why, in plain prose, wrapped ~72–80 chars>
+<body: what changed and why, in plain prose, no-wrap, 1-2 sentences <80 chars>
 
 Closes #N
 ```
