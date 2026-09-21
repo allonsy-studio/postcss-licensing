@@ -1,6 +1,4 @@
-# CLAUDE.md
-
-Guidance for working in this repository.
+# @allons-y/postcss-licensing
 
 ## Project overview
 
@@ -67,7 +65,8 @@ Closes #N
 - `<type>`: feat, fix, docs, chore, refactor, test, …
 - Subject in imperative mood ("add", not "added").
 - Small commits may be subject-only; write a body when the change needs context.
-- Do NOT add "Generated with Claude Code" or Co-Authored-By footers.
+- Never add AI attribution to a commit or a PR: no `Co-Authored-By` trailer, no
+  "Generated with …" footer, no session URLs.
 
 ## Pull requests
 
