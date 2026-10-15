@@ -1,0 +1,32 @@
+{
+	"features": [
+		{
+			"body": "Checks COPYRIGHT, then LICENSE, in the working directory. Set filename & cwd to look anywhere else: the first match wins.",
+			"icon": "magnifying-glass",
+			"title": "Finds your license file"
+		},
+		{
+			"body": "The header is a /*! comment, the form most CSS minifiers keep, so the license reaches your published files.",
+			"icon": "compress",
+			"title": "Survives minification"
+		},
+		{
+			"body": "A missing or empty license file adds a PostCSS warning that names where it looked. Your build keeps going.",
+			"icon": "triangle-exclamation",
+			"title": "Warns instead of failing"
+		},
+		{
+			"body": "Empty files stay empty instead of becoming a lone license comment. Turn skipIfEmpty off if you want the header anyway.",
+			"icon": "file-circle-minus",
+			"title": "Skips empty stylesheets"
+		}
+	],
+	"install": "npm install --save-dev @allons-y/postcss-licensing",
+	"lede": "A PostCSS plugin that prepends your COPYRIGHT or LICENSE file to each stylesheet as a /*! … */ comment. No file? You get a warning, not a failed build.",
+	"tagline": "License headers for your CSS",
+	"usage": {
+		"caption": "Looks for COPYRIGHT, then LICENSE, in the working directory.",
+		"code": "// postcss.config.js\nimport licensing from \"@allons-y/postcss-licensing\";\n\nexport default {\n\tplugins: [licensing()],\n};",
+		"language": "js"
+	}
+}
