@@ -342,6 +342,9 @@ __metadata:
     prismjs: "npm:^1.30.0"
   peerDependencies:
     postcss: ^8.0.0
+  dependenciesMeta:
+    cypress:
+      built: true
   languageName: unknown
   linkType: soft
 
