@@ -28,5 +28,10 @@
 		"caption": "Looks for COPYRIGHT, then LICENSE, in the working directory.",
 		"code": "// postcss.config.js\nimport licensing from \"@allons-y/postcss-licensing\";\n\nexport default {\n\tplugins: [licensing()],\n};",
 		"language": "js"
-	}
+	},
+	"logo": "wordmark.svg",
+	"favicon": "favicon.svg",
+	"faviconIco": "favicon.ico",
+	"appleTouchIcon": "apple-touch-icon.png",
+	"ogImage": "og.png"
 }

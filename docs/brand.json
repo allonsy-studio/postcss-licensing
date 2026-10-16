@@ -1,0 +1,87 @@
+{
+	"name": "postcss-licensing",
+	"concept": "Navy stamp: uniform rounded handle, square base & bar, bottom fade; favicon tile runs navy to azure.",
+	"font": {
+		"file": "../../allonsy-studio/.github/assets/fonts/space-grotesk-var.woff2",
+		"axes": {
+			"wght": 700
+		}
+	},
+	"palette": {
+		"ink": {
+			"light": "#16181d",
+			"dark": "#eceef3"
+		},
+		"accent": {
+			"light": "#1a3a9e",
+			"dark": "#7f94ee",
+			"role": "graphic"
+		},
+		"accent-fade": {
+			"light": "#a3b0d8",
+			"dark": "#3c466c",
+			"role": "decorative"
+		}
+	},
+	"gradients": {
+		"fade": {
+			"stops": [
+				"accent",
+				"accent-fade"
+			],
+			"direction": "vertical"
+		},
+		"tile": {
+			"stops": [
+				"#1a3a9e",
+				"#2a6ee0"
+			]
+		}
+	},
+	"paint": {
+		"*": "ink"
+	},
+	"decorations": [
+		{
+			"x": -0.912,
+			"y": -0.793,
+			"width": 0.31,
+			"height": 0.31,
+			"radius": 0.155,
+			"paint": "accent",
+			"skew": false
+		},
+		{
+			"x": -0.912,
+			"y": -0.638,
+			"width": 0.31,
+			"height": 0.367,
+			"radius": 0,
+			"paint": "accent",
+			"skew": false
+		},
+		{
+			"x": -1.25,
+			"y": -0.308,
+			"width": 1.001,
+			"height": 0.338,
+			"radius": 0,
+			"paint": "@fade",
+			"skew": false
+		},
+		{
+			"x": -1.179,
+			"y": 0.082,
+			"width": 0.88,
+			"height": 0.118,
+			"radius": 0,
+			"paint": "@fade",
+			"skew": false
+		}
+	],
+	"favicon": {
+		"tile": "@tile",
+		"ink": "#ffffff",
+		"fit": "x-height"
+	}
+}
