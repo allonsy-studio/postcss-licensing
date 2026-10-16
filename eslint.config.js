@@ -9,7 +9,13 @@ import eslintConfigPrettier from "eslint-config-prettier/flat";
 
 export default defineConfig([
   {
-    ignores: ["**/node_modules/**", ".yarn/**", ".cache/**"],
+    ignores: [
+      "**/node_modules/**",
+      ".yarn/**",
+      "**/.cache/**",
+      "docs/_site/**",
+      "docs/_a11y/**",
+    ],
   },
   {
     files: ["**/*.js"],
@@ -41,6 +47,25 @@ export default defineConfig([
         { terms: ["todo", "fixme", "xxx"], location: "anywhere" },
       ],
     },
+  },
+  {
+    files: ["docs/content/assets/scripts/**/*.js"],
+    languageOptions: { globals: globals.browser },
+  },
+  {
+    files: ["docs/cypress/**/*.js"],
+    languageOptions: {
+      globals: {
+        ...globals.browser,
+        ...globals.mocha,
+        cy: "readonly",
+        Cypress: "readonly",
+      },
+    },
+  },
+  {
+    files: ["docs/cypress.config.js"],
+    rules: { "no-console": "off" },
   },
   {
     // All JSON except package.json, which has its own jsonc block below.

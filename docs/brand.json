@@ -1,0 +1,87 @@
+{
+	"concept": "Navy stamp: uniform rounded handle, square base & bar, bottom fade; favicon tile runs navy to azure.",
+	"decorations": [
+		{
+			"height": 0.31,
+			"paint": "accent",
+			"radius": 0.155,
+			"skew": false,
+			"width": 0.31,
+			"x": -0.912,
+			"y": -0.793
+		},
+		{
+			"height": 0.367,
+			"paint": "accent",
+			"radius": 0,
+			"skew": false,
+			"width": 0.31,
+			"x": -0.912,
+			"y": -0.638
+		},
+		{
+			"height": 0.338,
+			"paint": "@fade",
+			"radius": 0,
+			"skew": false,
+			"width": 1.001,
+			"x": -1.25,
+			"y": -0.308
+		},
+		{
+			"height": 0.118,
+			"paint": "@fade",
+			"radius": 0,
+			"skew": false,
+			"width": 0.88,
+			"x": -1.179,
+			"y": 0.082
+		}
+	],
+	"favicon": {
+		"fit": "x-height",
+		"ink": "#ffffff",
+		"tile": "@tile"
+	},
+	"font": {
+		"axes": {
+			"wght": 700
+		},
+		"file": "../../allonsy-studio/.github/assets/fonts/space-grotesk-var.woff2"
+	},
+	"gradients": {
+		"fade": {
+			"direction": "vertical",
+			"stops": [
+				"accent",
+				"accent-fade"
+			]
+		},
+		"tile": {
+			"stops": [
+				"#1a3a9e",
+				"#2a6ee0"
+			]
+		}
+	},
+	"name": "postcss-licensing",
+	"paint": {
+		"*": "ink"
+	},
+	"palette": {
+		"accent": {
+			"dark": "#7f94ee",
+			"light": "#1a3a9e",
+			"role": "graphic"
+		},
+		"accent-fade": {
+			"dark": "#3c466c",
+			"light": "#a3b0d8",
+			"role": "decorative"
+		},
+		"ink": {
+			"dark": "#eceef3",
+			"light": "#16181d"
+		}
+	}
+}
