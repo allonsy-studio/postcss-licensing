@@ -1,4 +1,7 @@
 {
+	"appleTouchIcon": "apple-touch-icon.png",
+	"favicon": "favicon.svg",
+	"faviconIco": "favicon.ico",
 	"features": [
 		{
 			"body": "Checks COPYRIGHT, then LICENSE, in the working directory. Set filename & cwd to look anywhere else: the first match wins.",
@@ -23,15 +26,12 @@
 	],
 	"install": "npm install --save-dev @allons-y/postcss-licensing",
 	"lede": "A PostCSS plugin that prepends your COPYRIGHT or LICENSE file to each stylesheet as a /*! … */ comment. No file? You get a warning, not a failed build.",
+	"logo": "wordmark.svg",
+	"ogImage": "og.png",
 	"tagline": "License headers for your CSS",
 	"usage": {
 		"caption": "Looks for COPYRIGHT, then LICENSE, in the working directory.",
 		"code": "// postcss.config.js\nimport licensing from \"@allons-y/postcss-licensing\";\n\nexport default {\n\tplugins: [licensing()],\n};",
 		"language": "js"
-	},
-	"logo": "wordmark.svg",
-	"favicon": "favicon.svg",
-	"faviconIco": "favicon.ico",
-	"appleTouchIcon": "apple-touch-icon.png",
-	"ogImage": "og.png"
+	}
 }

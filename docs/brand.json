@@ -1,35 +1,61 @@
 {
-	"name": "postcss-licensing",
 	"concept": "Navy stamp: uniform rounded handle, square base & bar, bottom fade; favicon tile runs navy to azure.",
+	"decorations": [
+		{
+			"height": 0.31,
+			"paint": "accent",
+			"radius": 0.155,
+			"skew": false,
+			"width": 0.31,
+			"x": -0.912,
+			"y": -0.793
+		},
+		{
+			"height": 0.367,
+			"paint": "accent",
+			"radius": 0,
+			"skew": false,
+			"width": 0.31,
+			"x": -0.912,
+			"y": -0.638
+		},
+		{
+			"height": 0.338,
+			"paint": "@fade",
+			"radius": 0,
+			"skew": false,
+			"width": 1.001,
+			"x": -1.25,
+			"y": -0.308
+		},
+		{
+			"height": 0.118,
+			"paint": "@fade",
+			"radius": 0,
+			"skew": false,
+			"width": 0.88,
+			"x": -1.179,
+			"y": 0.082
+		}
+	],
+	"favicon": {
+		"fit": "x-height",
+		"ink": "#ffffff",
+		"tile": "@tile"
+	},
 	"font": {
-		"file": "../../allonsy-studio/.github/assets/fonts/space-grotesk-var.woff2",
 		"axes": {
 			"wght": 700
-		}
-	},
-	"palette": {
-		"ink": {
-			"light": "#16181d",
-			"dark": "#eceef3"
 		},
-		"accent": {
-			"light": "#1a3a9e",
-			"dark": "#7f94ee",
-			"role": "graphic"
-		},
-		"accent-fade": {
-			"light": "#a3b0d8",
-			"dark": "#3c466c",
-			"role": "decorative"
-		}
+		"file": "../../allonsy-studio/.github/assets/fonts/space-grotesk-var.woff2"
 	},
 	"gradients": {
 		"fade": {
+			"direction": "vertical",
 			"stops": [
 				"accent",
 				"accent-fade"
-			],
-			"direction": "vertical"
+			]
 		},
 		"tile": {
 			"stops": [
@@ -38,50 +64,24 @@
 			]
 		}
 	},
+	"name": "postcss-licensing",
 	"paint": {
 		"*": "ink"
 	},
-	"decorations": [
-		{
-			"x": -0.912,
-			"y": -0.793,
-			"width": 0.31,
-			"height": 0.31,
-			"radius": 0.155,
-			"paint": "accent",
-			"skew": false
+	"palette": {
+		"accent": {
+			"dark": "#7f94ee",
+			"light": "#1a3a9e",
+			"role": "graphic"
 		},
-		{
-			"x": -0.912,
-			"y": -0.638,
-			"width": 0.31,
-			"height": 0.367,
-			"radius": 0,
-			"paint": "accent",
-			"skew": false
+		"accent-fade": {
+			"dark": "#3c466c",
+			"light": "#a3b0d8",
+			"role": "decorative"
 		},
-		{
-			"x": -1.25,
-			"y": -0.308,
-			"width": 1.001,
-			"height": 0.338,
-			"radius": 0,
-			"paint": "@fade",
-			"skew": false
-		},
-		{
-			"x": -1.179,
-			"y": 0.082,
-			"width": 0.88,
-			"height": 0.118,
-			"radius": 0,
-			"paint": "@fade",
-			"skew": false
+		"ink": {
+			"dark": "#eceef3",
+			"light": "#16181d"
 		}
-	],
-	"favicon": {
-		"tile": "@tile",
-		"ink": "#ffffff",
-		"fit": "x-height"
 	}
 }
