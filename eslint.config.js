@@ -49,10 +49,6 @@ export default defineConfig([
     },
   },
   {
-    files: ["docs/content/assets/scripts/**/*.js"],
-    languageOptions: { globals: globals.browser },
-  },
-  {
     files: ["docs/cypress/**/*.js"],
     languageOptions: {
       globals: {

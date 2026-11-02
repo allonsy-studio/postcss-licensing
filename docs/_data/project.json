@@ -1,26 +1,21 @@
 {
 	"appleTouchIcon": "apple-touch-icon.png",
 	"favicon": "favicon.svg",
-	"faviconIco": "favicon.ico",
 	"features": [
 		{
-			"body": "Checks COPYRIGHT, then LICENSE, in the working directory. Set filename & cwd to look anywhere else: the first match wins.",
-			"icon": "magnifying-glass",
+			"description": "Checks COPYRIGHT, then LICENSE, in the working directory. Set filename & cwd to look anywhere else: the first match wins.",
 			"title": "Finds your license file"
 		},
 		{
-			"body": "The header is a /*! comment, the form most CSS minifiers keep, so the license reaches your published files.",
-			"icon": "compress",
+			"description": "The header is a /*! comment, the form most CSS minifiers keep, so the license reaches your published files.",
 			"title": "Survives minification"
 		},
 		{
-			"body": "A missing or empty license file adds a PostCSS warning that names where it looked. Your build keeps going.",
-			"icon": "triangle-exclamation",
+			"description": "A missing or empty license file adds a PostCSS warning that names where it looked. Your build keeps going.",
 			"title": "Warns instead of failing"
 		},
 		{
-			"body": "Empty files stay empty instead of becoming a lone license comment. Turn skipIfEmpty off if you want the header anyway.",
-			"icon": "file-circle-minus",
+			"description": "Empty files stay empty instead of becoming a lone license comment. Turn skipIfEmpty off if you want the header anyway.",
 			"title": "Skips empty stylesheets"
 		}
 	],

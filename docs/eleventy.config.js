@@ -1,77 +1,43 @@
-// Core Eleventy config, shared by every project: project values belong in: _data/project.json
-//
+// Site config. The OSS site plugin adds the Norn plugin, its layouts, & the studio layer.
 // Build:  PATH_PREFIX=/my-project/ eleventy --config=docs/eleventy.config.js
 // PATH_PREFIX is the path the site is served from (default "/").
 
-import { mkdirSync, writeFileSync } from "node:fs";
+import fs from "node:fs";
 import path from "node:path";
 
 import { HtmlBasePlugin } from "@11ty/eleventy";
-import webc from "@11ty/eleventy-plugin-webc";
+import norn, { fillHooks, reset } from "@allons-y/webc-patterns/plugin";
+import oss, { ossEnabled, ossProps } from "@allons-y/webc-oss-site";
 
-import { bundleCss } from "./utilities/bundle-css.js";
-import { highlightFences, scrollTables, tokenRanges } from "./utilities/highlight.js";
-import { faIcon, iconType } from "./utilities/icons.js";
-
-// Anchored to this file so the build runs from the repository root or docs/.
+// Anchored to this file so the build runs from the repository root or the site directory.
 const here = path.relative(process.cwd(), import.meta.dirname) || ".";
 const at = (...parts) => path.posix.join(here.split(path.sep).join("/"), ...parts);
 
-const pathPrefix = process.env.PATH_PREFIX || "/";
-
-// Core sheets, bundled into assets/styles/core.css in this order; project.css stays separate.
-const CORE_SHEETS = ["tokens", "reset", "layout", "components", "studio"];
+// The studio layer stays on unless package.json sets "oss-docs": { "oss": false }.
+const withOss = ossEnabled({ packagePath: path.resolve(import.meta.dirname, "../package.json") });
 
 /** @param {import("@11ty/eleventy").UserConfig} config */
 export default function (config) {
-	config.setDataFileBaseName("index");
-	config.ignores.add("README.md");
-	config.ignores.add("**/AGENTS.md");
-
-	config.addPlugin(webc, { components: at("_includes/*.webc") });
-
-	// Prefix root-relative URLs with PATH_PREFIX.
+	config.addPlugin(withOss ? oss : norn, {
+		props: (data) => ({
+			...ossProps(data.site, data.project, { anchors: data.anchors === true, oss: withOss }),
+			title: data.title,
+			ogImage: data.project?.ogImage && { src: `assets/img/${data.project.ogImage}`, alt: data.site?.name },
+		}),
+		// Components of the project's own go in _includes/. Give them a prefix other than norn- & oss-.
+		components: [at("_includes/*.webc")],
+	});
+	fillHooks(config, {
+		head: [`<style>${fs.readFileSync(reset, "utf8")}</style>`, '<link rel="stylesheet" href="/assets/styles/project.css" webc:keep />'].join("\n"),
+	});
 	config.addPlugin(HtmlBasePlugin);
 
-	config.addJavaScriptFunction("tokenRanges", tokenRanges);
-	config.addJavaScriptFunction("faIcon", faIcon);
-	config.addJavaScriptFunction("iconType", iconType);
-	config.amendLibrary("md", (md) => md.use(highlightFences).use(scrollTables));
-
-	// Pages on the docs layout, in order, & the pages around one.
-	config.addCollection("docs", (api) =>
-		api
-			.getAll()
-			.filter((page) => page.data.layout === "docs.webc")
-			.sort((a, b) => (a.data.order ?? 0) - (b.data.order ?? 0) || a.inputPath.localeCompare(b.inputPath)),
-	);
-	config.addJavaScriptFunction("adjacent", (pages, current) => {
-		const index = pages.findIndex((page) => page.url === current.url);
-		return { prev: pages[index - 1], next: pages[index + 1] };
-	});
-
-	config.addPassthroughCopy(
-		{ [at("content/assets")]: "assets" },
-		{ filter: ["**/*", `!styles/{${CORE_SHEETS.join(",")}}.css`] },
-	);
-	config.addWatchTarget(at("content/assets/styles"));
-	// `directories.output` is where this build writes (the audit overrides it); `dir.output` is only the config's.
-	config.on("eleventy.after", ({ directories }) => {
-		const out = path.join(directories.output, "assets/styles");
-		mkdirSync(out, { recursive: true });
-		writeFileSync(path.join(out, "core.css"), bundleCss(at("content/assets/styles"), CORE_SHEETS));
-	});
+	config.addPassthroughCopy({ [at("content/assets")]: "assets" });
 
 	return {
-		pathPrefix,
-		dir: {
-			input: at("content"),
-			output: at("_site"),
-			// Relative to the input directory.
-			includes: "../_includes",
-			layouts: "../_layouts",
-			data: "../_data",
-		},
+		pathPrefix: process.env.PATH_PREFIX || "/",
+		dir: { input: at("content"), output: process.env.DOCS_OUTPUT || at("_site"), includes: "../_includes", layouts: "../_layouts", data: "../_data" },
 		templateFormats: ["md", "webc"],
+		markdownTemplateEngine: false,
 	};
 }
