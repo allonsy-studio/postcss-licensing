@@ -84,3 +84,5 @@ web_modules/
 docs/_site
 docs/_a11y
 docs/cypress/screenshots
+.opx/*
+!.opx/config.json
