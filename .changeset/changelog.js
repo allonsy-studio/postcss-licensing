@@ -48,13 +48,13 @@ const GITHUB_SERVER_URL = process.env.GITHUB_SERVER_URL || "https://github.com";
  * @returns {string}
  */
 function requireRepo(options) {
-  if (!options || !options.repo) {
-    throw new Error(
-      "Please provide a repo to the changelog generator in .changeset/config.json:\n" +
+	if (!options || !options.repo) {
+		throw new Error(
+			"Please provide a repo to the changelog generator in .changeset/config.json:\n" +
         '"changelog": ["./changelog.js", { "repo": "org/repo" }]',
-    );
-  }
-  return options.repo;
+		);
+	}
+	return options.repo;
 }
 
 /**
@@ -67,9 +67,9 @@ function requireRepo(options) {
  * @returns {string}
  */
 function linkifyIssueRefs(line, repo) {
-  return line.replace(/\[.*?\]\(.*?\)|\B#([1-9]\d*)\b/g, (match, issue) =>
-    issue ? `[#${issue}](${GITHUB_SERVER_URL}/${repo}/issues/${issue})` : match,
-  );
+	return line.replace(/\[.*?\]\(.*?\)|\B#([1-9]\d*)\b/g, (match, issue) =>
+		issue ? `[#${issue}](${GITHUB_SERVER_URL}/${repo}/issues/${issue})` : match,
+	);
 }
 
 /**
@@ -80,27 +80,27 @@ function linkifyIssueRefs(line, repo) {
  * @returns {{ cleaned: string, pr?: number, commit?: string, authors: string[] }}
  */
 function extractMeta(summary) {
-  let pr;
-  let commit;
-  const authors = [];
-  const cleaned = summary
-    .replace(
-      /^[ \t]*(?:pr|pull|pull\s+request):\s*#?(\d+)[ \t]*$/im,
-      (_match, n) => {
-        pr = Number(n);
-        return "";
-      },
-    )
-    .replace(/^[ \t]*commit:\s*(\S+)[ \t]*$/im, (_match, c) => {
-      commit = c;
-      return "";
-    })
-    .replace(/^[ \t]*(?:author|user):\s*@?(\S+)[ \t]*$/gim, (_match, u) => {
-      authors.push(u);
-      return "";
-    })
-    .trim();
-  return { cleaned, pr, commit, authors };
+	let pr;
+	let commit;
+	const authors = [];
+	const cleaned = summary
+		.replace(
+			/^[ \t]*(?:pr|pull|pull\s+request):\s*#?(\d+)[ \t]*$/im,
+			(_match, n) => {
+				pr = Number(n);
+				return "";
+			},
+		)
+		.replace(/^[ \t]*commit:\s*(\S+)[ \t]*$/im, (_match, c) => {
+			commit = c;
+			return "";
+		})
+		.replace(/^[ \t]*(?:author|user):\s*@?(\S+)[ \t]*$/gim, (_match, u) => {
+			authors.push(u);
+			return "";
+		})
+		.trim();
+	return { cleaned, pr, commit, authors };
 }
 
 /**
@@ -115,88 +115,88 @@ function extractMeta(summary) {
  * @returns {Promise<{ reference: string | null, authors: { login: string, link: string }[] }>}
  */
 async function resolveLinks(repo, meta, changesetCommit) {
-  let info = { user: null, links: { pull: null, commit: null, user: null } };
-  if (meta.pr !== undefined) {
-    info = await getInfoFromPullRequest({ repo, pull: meta.pr });
-  } else {
-    const commit = meta.commit || changesetCommit;
-    if (commit) info = await getInfo({ repo, commit });
-  }
-  let { links } = info;
-  // An explicit `commit:` override wins over a PR's merge commit.
-  if (meta.commit) {
-    const short = meta.commit.slice(0, 7);
-    links = {
-      ...links,
-      commit: `[\`${short}\`](${GITHUB_SERVER_URL}/${repo}/commit/${meta.commit})`,
-    };
-  }
-  // `author:` overrides win; otherwise fall back to the resolved commit/PR author.
-  const authors = meta.authors.length
-    ? meta.authors.map((login) => ({
-        login,
-        link: `[@${login}](${GITHUB_SERVER_URL}/${login})`,
-      }))
-    : info.user
-      ? [{ login: info.user, link: links.user }]
-      : [];
-  return { reference: links.pull || links.commit, authors };
+	let info = { user: null, links: { pull: null, commit: null, user: null } };
+	if (meta.pr !== undefined) {
+		info = await getInfoFromPullRequest({ repo, pull: meta.pr });
+	} else {
+		const commit = meta.commit || changesetCommit;
+		if (commit) info = await getInfo({ repo, commit });
+	}
+	let { links } = info;
+	// An explicit `commit:` override wins over a PR's merge commit.
+	if (meta.commit) {
+		const short = meta.commit.slice(0, 7);
+		links = {
+			...links,
+			commit: `[\`${short}\`](${GITHUB_SERVER_URL}/${repo}/commit/${meta.commit})`,
+		};
+	}
+	// `author:` overrides win; otherwise fall back to the resolved commit/PR author.
+	const authors = meta.authors.length
+		? meta.authors.map((login) => ({
+			login,
+			link: `[@${login}](${GITHUB_SERVER_URL}/${login})`,
+		}))
+		: info.user
+			? [{ login: info.user, link: links.user }]
+			: [];
+	return { reference: links.pull || links.commit, authors };
 }
 
 /** @type {ChangelogFunctions} */
 const changelogFunctions = {
-  getReleaseLine: async (changeset, _type, options) => {
-    const repo = requireRepo(options);
-    const {
-      cleaned,
-      pr,
-      commit,
-      authors: authorOverrides,
-    } = extractMeta(changeset.summary);
-    const { reference, authors } = await resolveLinks(
-      repo,
-      { pr, commit, authors: authorOverrides },
-      changeset.commit,
-    );
+	getReleaseLine: async (changeset, _type, options) => {
+		const repo = requireRepo(options);
+		const {
+			cleaned,
+			pr,
+			commit,
+			authors: authorOverrides,
+		} = extractMeta(changeset.summary);
+		const { reference, authors } = await resolveLinks(
+			repo,
+			{ pr, commit, authors: authorOverrides },
+			changeset.commit,
+		);
 
-    const [headline, ...rest] = cleaned
-      .split("\n")
-      .map((line) => line.trimEnd());
+		const [headline, ...rest] = cleaned
+			.split("\n")
+			.map((line) => line.trimEnd());
 
-    // Thank only external contributors — anyone not on the maintainer allowlist.
-    const maintainers = new Set(
-      (options.maintainers ?? []).map((handle) => handle.toLowerCase()),
-    );
-    const external = authors.filter(
-      (author) => !maintainers.has(author.login.toLowerCase()),
-    );
+		// Thank only external contributors — anyone not on the maintainer allowlist.
+		const maintainers = new Set(
+			(options.maintainers ?? []).map((handle) => handle.toLowerCase()),
+		);
+		const external = authors.filter(
+			(author) => !maintainers.has(author.login.toLowerCase()),
+		);
 
-    let suffix = "";
-    if (reference) suffix += ` (${reference})`;
-    if (external.length && !options.disableThanks)
-      suffix += ` — thanks ${external.map((author) => author.link).join(", ")}!`;
+		let suffix = "";
+		if (reference) suffix += ` (${reference})`;
+		if (external.length && !options.disableThanks)
+			suffix += ` — thanks ${external.map((author) => author.link).join(", ")}!`;
 
-    // Continuation lines are indented two spaces so multi-paragraph entries
-    // stay inside the list item; blank lines are preserved as paragraph breaks.
-    const body = rest
-      .map((line) => (line ? `  ${linkifyIssueRefs(line, repo)}` : ""))
-      .join("\n");
+		// Continuation lines are indented two spaces so multi-paragraph entries
+		// stay inside the list item; blank lines are preserved as paragraph breaks.
+		const body = rest
+			.map((line) => (line ? `  ${linkifyIssueRefs(line, repo)}` : ""))
+			.join("\n");
 
-    return `- ${linkifyIssueRefs(headline, repo)}${suffix}${body ? `\n${body}` : ""}`;
-  },
+		return `- ${linkifyIssueRefs(headline, repo)}${suffix}${body ? `\n${body}` : ""}`;
+	},
 
-  getDependencyReleaseLine: async (
-    _changesets,
-    dependenciesUpdated,
-    options,
-  ) => {
-    requireRepo(options);
-    if (dependenciesUpdated.length === 0) return "";
-    const updated = dependenciesUpdated.map(
-      (dep) => `  - \`${dep.name}@${dep.newVersion}\``,
-    );
-    return ["- Updated dependencies:", ...updated].join("\n");
-  },
+	getDependencyReleaseLine: async (
+		_changesets,
+		dependenciesUpdated,
+		options,
+	) => {
+		requireRepo(options);
+		if (dependenciesUpdated.length === 0) return "";
+		const updated = dependenciesUpdated.map(
+			(dep) => `  - \`${dep.name}@${dep.newVersion}\``,
+		);
+		return ["- Updated dependencies:", ...updated].join("\n");
+	},
 };
 
 export default changelogFunctions;
