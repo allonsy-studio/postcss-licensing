@@ -42,7 +42,7 @@ helpers. Warning text must match `messages.fileNotFound()` exactly.
 
 ## Releases and changesets
 
-Releases are automated by **Changesets** (the release workflow opens a
+Releases are automated by **Changesets** through `opx release` (the release workflow opens a
 "Version Packages" PR). For any change that affects consumers, run
 `yarn changeset`, pick the bump (patch = fix, minor = feature,
 major = breaking), and commit the generated `.changeset/*.md` file with your

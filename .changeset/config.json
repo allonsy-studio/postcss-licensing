@@ -3,9 +3,8 @@
   "access": "public",
   "baseBranch": "main",
   "changelog": [
-    "./changelog.js",
+    "@allons-y/opx-release/changelog",
     {
-      "maintainers": ["castastrophe"],
       "repo": "allonsy-studio/postcss-licensing"
     }
   ]
