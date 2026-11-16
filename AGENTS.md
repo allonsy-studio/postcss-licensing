@@ -70,6 +70,7 @@ Closes #N
 
 ## Pull requests
 
+- Pull requests are squash-merged: the PR title becomes the commit subject & the commit messages its body, so the title must be a valid Conventional Commits subject.
 - Branch from `main`: `fix/short-description`, `feat/short-description`,
   `docs/short-description`.
 - One logical change per PR; reference the issue (`Closes #123`).
